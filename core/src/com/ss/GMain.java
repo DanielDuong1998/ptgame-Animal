@@ -6,6 +6,7 @@ import com.platform.IPlatform;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.ss.OfficialPackage.scenes.GameScene;
+import com.ss.OfficialPackage.scenes.LoadScene;
 import com.ss.core.exSprite.particle.GParticleSystem;
 import com.ss.core.util.GDirectedGame;
 import com.ss.core.util.GScreen;
@@ -82,7 +83,7 @@ public class GMain extends GDirectedGame {
 
   private static GScreen menuScreen()
   {
-    return new GameScene();
+    return new LoadScene();
   }
 
   public void create()

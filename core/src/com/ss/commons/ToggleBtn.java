@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.ss.core.util.GLayerGroup;
 import com.ss.core.util.GUI;
 import com.ss.effects.SoundEffect;
 
@@ -48,11 +47,11 @@ public class ToggleBtn {
         SoundEffect.Play(SoundEffect.click);
         setValue(false);
         if(id == 1){
-          SoundEffect.music = false;
+          SoundEffect.muteMusic = false;
 //          SoundEffect.pauseM();
         }
         else if(id == 2){
-          SoundEffect.mute = true;
+          SoundEffect.muteSfx = true;
         }
         return super.touchDown(event, x, y, pointer, button);
       }
@@ -65,11 +64,11 @@ public class ToggleBtn {
         setValue(true);
 
         if(id == 1){
-          SoundEffect.music = true;
+          SoundEffect.muteMusic = true;
 //          SoundEffect.unPause();
         }
         else if(id == 2){
-          SoundEffect.mute = false;
+          SoundEffect.muteSfx = false;
         }
         return super.touchDown(event, x, y, pointer, button);
       }

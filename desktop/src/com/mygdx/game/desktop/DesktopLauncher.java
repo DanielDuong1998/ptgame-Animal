@@ -12,6 +12,8 @@ public class DesktopLauncher {
     config.x = 20;
     config.y = 10;
 
+//    config.width = 1500/2;
+//    config.height = 720/2;
     config.width = 1280/2;
     config.height = 720/2;
     new LwjglApplication(new GMain(new IPlatform() {
