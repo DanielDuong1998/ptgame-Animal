@@ -5,7 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.ss.OfficialPackage.configs.Config;
+import com.ss.commons.TextureAtlasC;
+import com.ss.core.action.exAction.GSimpleAction;
 import com.ss.core.exSprite.GShapeSprite;
+import com.ss.core.util.GAssetsManager;
 import com.ss.core.util.GLayer;
 import com.ss.core.util.GLayerGroup;
 import com.ss.core.util.GScreen;
@@ -14,6 +17,9 @@ import com.ss.effects.SoundEffect;
 
 public class LoadScene extends GScreen {
   private GLayerGroup group;
+  private boolean isFinishLoadAssets = false;
+  private boolean isFinishTurnOfDarkShape = false;
+  private GShapeSprite darkShape;
 
   @Override
   public void dispose() {
@@ -26,6 +32,7 @@ public class LoadScene extends GScreen {
     loadImageLoading();
 
     SoundEffect.initSound();
+    TextureAtlasC.initAtlas();
   }
 
   private void initGroup(){
@@ -46,12 +53,12 @@ public class LoadScene extends GScreen {
     loadImg.setPosition(bg.getWidth()/2 - loadImg.getWidth()/2, bg.getHeight()/1.8f - loadImg.getHeight()/2);
     aniLoading(loadImg);
 
-    GShapeSprite darkShape = new GShapeSprite();
+    darkShape = new GShapeSprite();
     darkShape.createRectangle(true, 0, 0, bg.getWidth(), bg.getHeight());
     darkShape.debug();
     group.addActor(darkShape);
     darkShape.setColor(0, 0, 0, 1);
-    showDarkShape(darkShape);
+    showDarkShape(darkShape, false);
   }
 
   private void aniLoading(Image loadImg){
@@ -63,15 +70,45 @@ public class LoadScene extends GScreen {
     ));
   }
 
-  private void showDarkShape(GShapeSprite darkShape){
+  private void showDarkShape(GShapeSprite darkShape, boolean isShow){
+    float ap = isShow ? 1 : 0;
     darkShape.addAction(Actions.sequence(
-        Actions.alpha(0, 2f)
+        Actions.alpha(ap, Config.DURATION_DARK_SHAPE_LOAD_SCENE),
+        GSimpleAction.simpleAction((d, a)->{
+          if(!isShow) isFinishTurnOfDarkShape = true;
+          return true;
+        })
     ));
   }
 
   @Override
   public void run() {
+    if(!isFinishLoadAssets){
+      if(!GAssetsManager.isFinished()){
+        System.out.println("chua xong");
+      }
+      else {
+        isFinishLoadAssets = true;
+        System.out.println("xong roi");
+      }
+    }
 
+    if(isFinishLoadAssets && isFinishTurnOfDarkShape){
+      isFinishTurnOfDarkShape = false;
+      handleAfterLoading();
+      System.out.println("is load finish and turn off dark shape finish");
+    }
+  }
+
+  private void handleAfterLoading(){
+    showDarkShape(darkShape, true);
+    group.addAction(Actions.sequence(
+        Actions.delay(Config.DURATION_DARK_SHAPE_LOAD_SCENE),
+        Actions.run(()->{
+          this.setScreen(new StartScene());
+        })
+    ));
+    System.out.println("handle after loading");
   }
 
 }

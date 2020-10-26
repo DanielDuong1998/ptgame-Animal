@@ -10,7 +10,7 @@ public class StartScene extends GScreen {
 
   @Override
   public void init() {
-
+    System.out.println("start Scene");
   }
 
   @Override
