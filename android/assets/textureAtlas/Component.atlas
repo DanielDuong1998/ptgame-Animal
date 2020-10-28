@@ -1,0 +1,69 @@
+
+Component.png
+size: 2048,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+btn_exit
+  rotate: false
+  xy: 1330, 323
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+btn_guide
+  rotate: false
+  xy: 1228, 323
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+btn_leaderboard
+  rotate: false
+  xy: 1228, 221
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+btn_red
+  rotate: false
+  xy: 2, 2
+  size: 218, 91
+  orig: 218, 91
+  offset: 0, 0
+  index: -1
+btn_setting
+  rotate: false
+  xy: 1330, 221
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+btn_shop
+  rotate: false
+  xy: 1432, 323
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+btn_yellow
+  rotate: false
+  xy: 573, 123
+  size: 218, 91
+  orig: 218, 91
+  offset: 0, 0
+  index: -1
+logo
+  rotate: false
+  xy: 573, 216
+  size: 653, 207
+  orig: 653, 207
+  offset: 0, 0
+  index: -1
+panel
+  rotate: false
+  xy: 2, 95
+  size: 569, 328
+  orig: 569, 328
+  offset: 0, 0
+  index: -1

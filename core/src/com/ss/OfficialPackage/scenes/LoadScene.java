@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.ss.OfficialPackage.configs.Config;
+import com.ss.commons.BitmapFontC;
 import com.ss.commons.TextureAtlasC;
 import com.ss.core.action.exAction.GSimpleAction;
 import com.ss.core.exSprite.GShapeSprite;
@@ -32,6 +33,7 @@ public class LoadScene extends GScreen {
     loadImageLoading();
 
     SoundEffect.initSound();
+    BitmapFontC.initBitmapFont();
     TextureAtlasC.initAtlas();
   }
 
