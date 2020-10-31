@@ -35,7 +35,7 @@ public class StartScene extends GScreen {
   }
 
   private void initController(){
-    startMainController = new StartMainController();
+    startMainController = new StartMainController(this);
   }
 
   private void initHardView(){
