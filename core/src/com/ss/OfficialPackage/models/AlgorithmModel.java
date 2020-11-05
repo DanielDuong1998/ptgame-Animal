@@ -213,5 +213,98 @@ public class AlgorithmModel {
     return path;
   }
 
+  //kiểm tra theo chiều ngang 4
+  public static Array<Vector2> checkHorizontalRect4(AnimalModel animal1, AnimalModel animal2, Array<Array<AnimalModel>> animals){
+    Array<Vector2> path = new Array<>();
+    path.add(new Vector2(animal1.getRow(), animal1.getCol()));
+
+    boolean logic = animal1.getCol() < animal2.getCol();
+    int startId = logic ? animal1.getCol() + 1 : animal1.getCol() - 1;
+    int endId = animal2.getCol();
+
+    //  System.out.println("ho4: ani1: " + animal1.toString());
+    // System.out.println("ho4: ani2: " + animal2.toString());
+    AnimalModel ani1 = animals.get(animal1.getRow()).get(startId);
+    AnimalModel ani2 = animals.get(animal1.getRow()).get(endId);
+    boolean checkRow = checkRow(ani1, ani2, animals);
+    if(checkRow){
+      path.add(new Vector2(animal1.getRow(), animal2.getCol()));
+      boolean logic1 = animal1.getRow() < animal2.getRow();
+      int rowAni2 = logic1 ? animal2.getRow() - 1 : animal2.getRow() + 1;
+
+      AnimalModel aniR1 = ani2;
+//            AnimalModel aniR2 = animals.get(animal2.getRow() - 1).get(endId);
+      AnimalModel aniR2 = animals.get(rowAni2).get(endId);
+      boolean checkCol = checkCol(aniR1, aniR2, animals);
+      if(checkCol){
+        path.add(new Vector2(animal2.getRow(), animal2.getCol()));
+        System.out.println("path: " + path);
+        return path;
+      }
+      path.removeRange(0, path.size - 1);
+      return path;
+    }
+    path.removeRange(0, path.size - 1);
+    return path;
+  }
+
+  //kiểm tra theo chiều doc 1
+  private static Array<Vector2> checkVerticalRect1(AnimalModel animal1, AnimalModel animal2, Array<Array<AnimalModel>> animals){
+    Array<Vector2> path = new Array<>();
+    path.add(new Vector2(animal1.getRow(), animal1.getCol()));
+
+    for(int i = animal1.getRow() - 1; i >= -1; i--){
+      if(i == -1){
+        path.add(new Vector2(-1, animal1.getCol()));
+        path.add(new Vector2(-1, animal2.getCol()));
+
+        int row = animal2.getRow() - 1;
+        int officialRow = Math.max(row, 0);
+        AnimalModel ani1 = animals.get(0).get(animal2.getCol());
+        AnimalModel ani2 = animals.get(officialRow).get(animal2.getCol());
+        boolean checkCol = checkCol(ani1, ani2, animals);
+        if(row == -1 || checkCol) {
+          path.add(new Vector2(animal2.getRow(), animal2.getCol()));
+          System.out.println("path: " + path);
+          return path;
+        }
+        path.removeRange(0, path.size - 1);
+        return path;
+      }
+      else {
+        if(animals.get(i).get(animal1.getCol()).getId() == -1){
+          if(i < animal2.getRow()){
+            path.add(new Vector2(i, animal1.getCol()));
+
+            AnimalModel ani1 = animals.get(i).get(animal1.getCol());
+            AnimalModel ani2 = animals.get(i).get(animal2.getCol());
+            boolean checkRow = checkRow(ani1, ani2, animals);
+            if(checkRow){
+              path.add(new Vector2(i, animal2.getCol()));
+
+              int row = Math.max(animal2.getRow() - 1, 0);
+              AnimalModel aniR1 = ani2;
+              AnimalModel aniR2 = animals.get(row).get(animal2.getCol());
+              if(checkCol(aniR1, aniR2, animals)){
+                path.add(new Vector2(animal2.getRow(), animal2.getCol()));
+                System.out.println("path: " + path);
+                return path;
+              }
+              path.removeRange(0, path.size - 1);
+              return path;
+            }
+            else path.pop();
+          }
+        }
+        else {
+          path.removeRange(0, path.size - 1);
+          return path;
+        }
+      }
+    }
+    path.removeRange(0, path.size - 1);
+    return path;
+  }
+
 
 }
