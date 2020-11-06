@@ -306,5 +306,108 @@ public class AlgorithmModel {
     return path;
   }
 
+  //kiểm tra theo chiều doc 2
+  private static Array<Vector2> checkVerticalRect2(AnimalModel animal1, AnimalModel animal2, Array<Array<AnimalModel>> animals){
+    Array<Vector2> path = new Array<>();
+    path.add(new Vector2(animal1.getRow(), animal1.getCol()));
+
+    for(int i = animal1.getRow() + 1; i <= BoardConfig.height; i++){
+
+      if(i == BoardConfig.height){
+        path.add(new Vector2(BoardConfig.height, animal1.getCol()));
+        path.add(new Vector2(BoardConfig.height, animal2.getCol()));
+
+        int row = animal2.getRow() + 1;
+        int officialRow = Math.min(row, BoardConfig.height - 1);
+        AnimalModel ani1 = animals.get(BoardConfig.height - 1).get(animal2.getCol());
+        AnimalModel ani2 = animals.get(officialRow).get(animal2.getCol());
+        if(row == BoardConfig.height || checkCol(ani1, ani2, animals)){
+          path.add(new Vector2(animal2.getRow(), animal2.getCol()));
+          System.out.println("path: " + path);
+          return path;
+        }
+        else {
+          path.removeRange(0, path.size - 1);
+          return path;
+        }
+      }
+      else {
+        if(animals.get(i).get(animal1.getCol()).getId() == -1){
+          if(i > animal2.getRow()){
+            path.add(new Vector2(i, animal1.getCol()));
+
+            AnimalModel ani1 = animals.get(i).get(animal1.getCol());
+            AnimalModel ani2 = animals.get(i).get(animal2.getCol());
+            boolean checkRow = checkRow(ani1, ani2, animals);
+            if(checkRow){
+              path.add(new Vector2(i, animal2.getCol()));
+
+              int row = Math.min(animal2.getRow() + 1, BoardConfig.height - 1);
+              AnimalModel aniR1 = ani2;
+              AnimalModel aniR2 = animals.get(row).get(animal2.getCol());
+              if(checkCol(aniR1, aniR2, animals)){
+                path.add(new Vector2(animal2.getRow(), animal2.getCol()));
+                System.out.println("path: " + path);
+                return path;
+              }
+              path.removeRange(0, path.size - 1);
+              return path;
+            }
+            else path.pop();
+          }
+        }
+        else {
+          path.removeRange(0, path.size - 1);
+          return path;
+        }
+      }
+    }
+    path.removeRange(0, path.size - 1);
+    return path;
+  }
+
+  //kiểm tra theo chiều doc 3
+  private static Array<Vector2> checkVerticalRect3(AnimalModel animal1, AnimalModel animal2, Array<Array<AnimalModel>> animals){
+    Array<Vector2> path = new Array<>();
+    path.add(new Vector2(animal1.getRow(), animal1.getCol()));
+
+    boolean logic = animal1.getRow() < animal2.getRow();
+    int startId = logic ? animal1.getRow() + 1 : animal1.getRow() - 1;
+    int endId = logic ? animal2.getRow() - 1 : animal2.getRow() + 1;
+    int operator = logic ? 1 : -1;
+    for(int i = startId; (logic && i <= endId) || (!logic && i >= endId); i += operator){
+      if(animals.get(i).get(animal1.getCol()).getId() == -1){
+        path.add(new Vector2(i, animal1.getCol()));
+
+        AnimalModel ani1 = animals.get(i).get(animal1.getCol());
+        AnimalModel ani2 = animals.get(i).get(animal2.getCol());
+        boolean checkRow = checkRow(ani1, ani2, animals);
+        if(checkRow){
+          path.add(new Vector2(i, animal2.getCol()));
+
+          AnimalModel aniR1 = ani2;
+          AnimalModel aniR2 = animals.get(endId).get(animal2.getCol());
+          boolean checkCol = checkCol(aniR1, aniR2, animals);
+          if(checkCol){
+            path.add(new Vector2(animal2.getRow(), animal2.getCol()));
+            System.out.println("path: " + path);
+            return path;
+          }
+          else {
+            path.pop();
+            path.pop();
+          }
+        }
+        else path.pop();
+      }
+      else {
+        path.removeRange(0, path.size - 1);
+        return path;
+      }
+    }
+    path.removeRange(0, path.size - 1);
+    return path;
+  }
+
 
 }
