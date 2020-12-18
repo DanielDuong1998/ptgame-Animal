@@ -156,19 +156,35 @@ public class StartHardView {
     });
 
     gshapeBtnShop.addListener(new ClickListener(){
-
+      @Override
+      public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        SoundEffect.Play(SoundEffect.click);
+        return super.touchDown(event, x, y, pointer, button);
+      }
     });
 
     gshapeBtnLeaderBoard.addListener(new ClickListener(){
-
+      @Override
+      public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        SoundEffect.Play(SoundEffect.click);
+        return super.touchDown(event, x, y, pointer, button);
+      }
     });
 
     gshapeBtnSetting.addListener(new ClickListener(){
-
+      @Override
+      public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        SoundEffect.Play(SoundEffect.click);
+        return super.touchDown(event, x, y, pointer, button);
+      }
     });
 
     gshapeBtnGuide.addListener(new ClickListener(){
-
+      @Override
+      public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        SoundEffect.Play(SoundEffect.click);
+        return super.touchDown(event, x, y, pointer, button);
+      }
     });
   }
 
