@@ -409,5 +409,88 @@ public class AlgorithmModel {
     return path;
   }
 
+  //kiểm tra theo chiều doc 4
+  public static Array<Vector2> checkVerticalRect4(AnimalModel animal1, AnimalModel animal2, Array<Array<AnimalModel>> animals){
+    Array<Vector2> path = new Array<>();
+    path.add(new Vector2(animal1.getRow(), animal1.getCol()));
+
+    boolean logic = animal1.getRow() < animal2.getRow();
+    int startId = logic ? animal1.getRow() + 1 : animal1.getRow() - 1;
+    int endId = animal2.getRow();
+
+    AnimalModel ani1 = animals.get(startId).get(animal1.getCol());
+    AnimalModel ani2 = animals.get(endId).get(animal1.getCol());
+    boolean checkCol = checkCol(ani1, ani2, animals);
+    if(checkCol){
+      path.add(new Vector2(animal2.getRow(), animal1.getCol()));
+      boolean logic1 = animal1.getCol() < animal2.getCol();
+      int colAni2 = logic1 ? animal2.getCol() - 1 : animal2.getCol() + 1;
+
+      AnimalModel aniR1 = ani2;
+      AnimalModel aniR2 = animals.get(endId).get(colAni2);
+//            AnimalModel aniR2 = animals.get(endId).get(animal2.getCol() - 1);
+      boolean checkRow = checkRow(aniR1, aniR2, animals);
+      if(checkRow){
+        path.add(new Vector2(animal2.getRow(), animal2.getCol()));
+        System.out.println("path: " + path);
+        return path;
+      }
+      path.removeRange(0, path.size - 1);
+      return path;
+    }
+    path.removeRange(0, path.size - 1);
+    return path;
+  }
+
+  //kiểm tra 2 animal sát bên
+  private static Array<Vector2> checkLineSideBySide(AnimalModel animal1, AnimalModel animal2, Array<Array<AnimalModel>> animals){
+    Array<Vector2> path = new Array<>();
+    if(animal1.getRow() == animal2.getRow()){
+      if(Math.abs(animal1.getCol() - animal2.getCol()) == 1){
+        path.add(new Vector2(animal1.getRow(), animal1.getCol()));
+        path.add(new Vector2(animal2.getRow(), animal2.getCol()));
+        return path;
+      }
+      return path;
+    }
+    else if(animal1.getCol() == animal2.getCol()){
+      if(Math.abs(animal1.getRow() - animal2.getRow()) == 1){
+        path.add(new Vector2(animal1.getRow(), animal1.getCol()));
+        path.add(new Vector2(animal2.getRow(), animal2.getCol()));
+        return path;
+      }
+      return path;
+    }
+    return path;
+  }
+
+  public static Array<Vector2> checkAnimals(AnimalModel animal1, AnimalModel animal2, Array<Array<AnimalModel>> animals){
+    Array<Vector2> path = new Array<>();
+    if(animal1.getId() != animal2.getId() || (animal1.getRow() == animal2.getRow() && animal1.getCol() == animal2.getCol())) return path;
+
+    path = checkLineSideBySide(animal1, animal2, animals);
+    if(path.size > 0) return path;
+    path = checkHorizontalRect1(animal1, animal2, animals);
+    if(path.size > 0) return path;
+    path = checkHorizontalRect2(animal1, animal2, animals);
+    if(path.size > 0) return path;
+    path = checkHorizontalRect3(animal1, animal2, animals);
+    if(path.size > 0) return path;
+    path = checkHorizontalRect4(animal1, animal2, animals);
+    //System.out.println("hr4");
+    if(path.size > 0) return path;
+
+    path = checkVerticalRect1(animal1, animal2, animals);
+    if(path.size > 0) return path;
+    path = checkVerticalRect2(animal1, animal2, animals);
+    if(path.size > 0) return path;
+    path = checkVerticalRect3(animal1, animal2, animals);
+    if(path.size > 0) return path;
+    path = checkVerticalRect4(animal1, animal2, animals);
+    //.out.println("vr4");
+    if(path.size > 0) return path;
+
+    return path;
+  }
 
 }
