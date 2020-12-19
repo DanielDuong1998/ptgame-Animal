@@ -12,7 +12,7 @@ public class LoadParticle {
 //    new GParticleSystem("effBilli","effect.atlas",1,1);
 //    new GParticleSystem("Titlecongra","effect.atlas",1,1);
 //    new GParticleSystem("Titlemerge","effect.atlas",1,1);
-    new GParticleSystem("fireTime","play.atlas",1,1);
+    new GParticleSystem("fireTime","Play.atlas",1,1);
 
   }
 }

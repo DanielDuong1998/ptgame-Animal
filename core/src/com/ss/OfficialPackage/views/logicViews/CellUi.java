@@ -12,6 +12,7 @@ import com.ss.OfficialPackage.scenes.GameScene;
 import com.ss.OfficialPackage.views.logicViews.pools.PoolAnimalUi;
 import com.ss.OfficialPackage.views.logicViews.pools.PoolBoxUi;
 import com.ss.OfficialPackage.views.logicViews.pools.PoolGShapeCustom;
+import com.ss.effects.SoundEffect;
 import com.ss.effects.effectWin;
 
 public class CellUi {
@@ -159,6 +160,7 @@ public class CellUi {
 
   private void cellTouchDown(){
     System.out.println("id click: " + id);
+    SoundEffect.Play(SoundEffect.clickPop);
 
     animationCellTouchDown(true);
     handleCellTouchDown();
@@ -296,8 +298,12 @@ public class CellUi {
   public void makeShadow(boolean isShadow){
     if(isShadow){
       System.out.println("shadow show");
-      shadowShape.setVisible(true);
+//      shadowShape.setVisible(true);
+      animalUi.showShadow(true);
     }
-    else shadowShape.setVisible(false);
+    else {
+      animalUi.showShadow(false);
+//      shadowShape.setVisible(false);
+    }
   }
 }

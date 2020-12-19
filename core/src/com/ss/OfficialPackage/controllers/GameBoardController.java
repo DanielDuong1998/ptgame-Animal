@@ -14,6 +14,7 @@ import com.ss.OfficialPackage.views.logicViews.CellUi;
 import com.ss.core.util.GLayer;
 import com.ss.core.util.GLayerGroup;
 import com.ss.core.util.GStage;
+import com.ss.effects.SoundEffect;
 import com.ss.gameLogic.objects.Combo;
 import com.ss.gameLogic.objects.EffHammer;
 
@@ -72,6 +73,7 @@ public class GameBoardController {
     }
     else {
       System.out.println("match");
+      SoundEffect.Play(SoundEffect.mmatch);
       BoardConfig.countcombo++;
       updateBestCombo();
       combo.upTime(BoardConfig.countcombo);
@@ -129,8 +131,8 @@ public class GameBoardController {
     Array<Array<AnimalModel>> animals = boardModel.getAnimals();
     Array<Array<Vector2>> arr = new Array<>();
     for(int i = 0; i < list.size; i = i+2){
-//      Array<Array<Vector2>> arr1 = SlideBoardModel.slideAnimalModels(animals, list.get(i), list.get(i+1), BoardConfig.modeSlide);
-      Array<Array<Vector2>> arr1 = SlideBoardModel.slideAnimalModels(animals, list.get(i), list.get(i+1), 22);
+      Array<Array<Vector2>> arr1 = SlideBoardModel.slideAnimalModels(animals, list.get(i), list.get(i+1), BoardConfig.modeSlide);
+//      Array<Array<Vector2>> arr1 = SlideBoardModel.slideAnimalModels(animals, list.get(i), list.get(i+1), 22);
       for(int j = 0; j < arr1.size; j++) {
         arr.add(arr1.get(j));
       }
@@ -228,6 +230,7 @@ public class GameBoardController {
     combo.upTime(BoardConfig.countcombo);
     cellUis.get((int)vt1.x * BoardConfig.width + (int)vt1.y).matchCell();
     cellUis.get((int)vt2.x * BoardConfig.width + (int)vt2.y).matchCell();
+    SoundEffect.Play(SoundEffect.mmatch);
     //boardUi.drawPath(path);
     // System.out.println("path: " + path);
 
@@ -298,24 +301,6 @@ public class GameBoardController {
               ));
             })
     ));
-
-    // sam set tai day
-//    for(int i = 0; i < listVts.size; i++) {
-//      cellUis.get((int)listVts.get(i).x * BoardConfig.width + (int)listVts.get(i).y).matchCell();
-//    }
-//
-//    pathGroup.addAction(Actions.sequence(
-//      Actions.delay(0.1f),
-//      Actions.run(()->{
-//        slideBoardManyAnimal(listVts);
-//      })
-//    ));
-//
-//    pathGroup.addAction(Actions.sequence(
-//      Actions.delay(0.35f),
-//      Actions.run(this::shuffleBoardIfNotHintOrWinGame)
-//    ));
-
   }
 
   private void shadowAllCellUi(boolean isShadow){

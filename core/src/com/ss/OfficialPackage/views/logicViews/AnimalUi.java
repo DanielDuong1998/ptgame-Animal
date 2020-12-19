@@ -1,5 +1,6 @@
 package com.ss.OfficialPackage.views.logicViews;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -94,5 +95,12 @@ public class AnimalUi {
 
   public Image getShape(){
     return shape;
+  }
+
+  public void showShadow(boolean isShow){
+    if(isShow){
+      shape.setColor(0,0,0,0.3f);
+    }
+    else shape.setColor(Color.WHITE);
   }
 }

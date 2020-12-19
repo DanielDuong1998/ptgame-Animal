@@ -24,6 +24,8 @@ public class StartHardView {
   private GShapeSprite gshapeBtnContinue, gshapeBtnNewGame, gshapeBtnShop, gshapeBtnLeaderBoard, gshapeBtnSetting, gshapeBtnGuide;
   private LabelC txtBtnContinue, txtBtnNewGame;
   private boolean isContinue;
+  private boolean isClick = false;
+
 
   public StartHardView(GLayerGroup group, StartMainController startMainController){
     this.group = group;
@@ -148,42 +150,87 @@ public class StartHardView {
     gshapeBtnNewGame.addListener(new ClickListener(){
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        System.out.println("new game click");
-        SoundEffect.Play(SoundEffect.click);
-        startMainController.setScreen(new GameScene());
+        if(!isClick){
+          isClick = true;
+          System.out.println("new game click");
+          SoundEffect.Play(SoundEffect.click);
+          startMainController.setScreen(new GameScene());
+        }
         return super.touchDown(event, x, y, pointer, button);
+      }
+
+      @Override
+      public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+        super.touchUp(event, x, y, pointer, button);
+        isClick = false;
       }
     });
 
     gshapeBtnShop.addListener(new ClickListener(){
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        SoundEffect.Play(SoundEffect.click);
+        if(!isClick){
+          isClick = true;
+          SoundEffect.Play(SoundEffect.click);
+        }
         return super.touchDown(event, x, y, pointer, button);
+      }
+
+      @Override
+      public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+        super.touchUp(event, x, y, pointer, button);
+        isClick = false;
       }
     });
 
     gshapeBtnLeaderBoard.addListener(new ClickListener(){
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        SoundEffect.Play(SoundEffect.click);
+        if(!isClick){
+          isClick = true;
+          SoundEffect.Play(SoundEffect.click);
+        }
         return super.touchDown(event, x, y, pointer, button);
+      }
+
+      @Override
+      public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+        super.touchUp(event, x, y, pointer, button);
+        isClick = false;
       }
     });
 
     gshapeBtnSetting.addListener(new ClickListener(){
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        SoundEffect.Play(SoundEffect.click);
+        if(!isClick){
+          isClick = true;
+          SoundEffect.Play(SoundEffect.click);
+        }
         return super.touchDown(event, x, y, pointer, button);
+      }
+
+      @Override
+      public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+        super.touchUp(event, x, y, pointer, button);
+        isClick = false;
       }
     });
 
     gshapeBtnGuide.addListener(new ClickListener(){
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        SoundEffect.Play(SoundEffect.click);
+        if(!isClick){
+          isClick = true;
+          SoundEffect.Play(SoundEffect.click);
+        }
         return super.touchDown(event, x, y, pointer, button);
+      }
+
+      @Override
+      public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+        super.touchUp(event, x, y, pointer, button);
+        isClick = false;
       }
     });
   }

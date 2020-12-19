@@ -7,7 +7,7 @@ import com.ss.core.util.GSound;
 
 /* renamed from: com.ss.effect.SoundEffect */
 public class SoundEffect {
-  public static int MAX_COMMON = 15;
+  public static int MAX_COMMON = 17;
   public static Music bgSound = null;
   public static Sound[] commons = null;
 //  public static GSound[] commons = null;
@@ -29,6 +29,9 @@ public class SoundEffect {
   public static int score      = 12;
   public static int unlockrank = 13;
   public static int win        = 14;
+  public static int clickPop   = 15;
+  public static int mmatch      = 16;
+
 
   private static Sound[] explode;
 
@@ -51,6 +54,8 @@ public class SoundEffect {
     commons[score]      = GAssetsManager.getSound("e6.mp3");
     commons[unlockrank] = GAssetsManager.getSound("e6.mp3");
     commons[win]        = GAssetsManager.getSound("e6.mp3");
+    commons[clickPop]   = GAssetsManager.getSound("clickpop.mp3");
+    commons[mmatch]     = GAssetsManager.getSound("mmatch.mp3");
 
     bgSound = GAssetsManager.getMusic("bg.ogg");
 
