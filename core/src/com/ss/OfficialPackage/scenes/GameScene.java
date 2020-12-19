@@ -9,11 +9,13 @@ import com.ss.core.util.GLayer;
 import com.ss.core.util.GLayerGroup;
 import com.ss.core.util.GScreen;
 import com.ss.core.util.GStage;
+import com.ss.gameLogic.objects.EffAniDead;
 
 public class GameScene extends GScreen {
   private GLayerGroup group;
   private GameMainController gameMainController;
   private GameHardView gameHardView;
+  public static EffAniDead effAni;
 
   @Override
   public void dispose() {
