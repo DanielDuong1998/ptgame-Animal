@@ -3,16 +3,17 @@ package com.ss.OfficialPackage.models;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.ss.OfficialPackage.configs.BoardConfig;
+import com.ss.OfficialPackage.controllers.GameBoardController;
 
 public class BoardModel {
-  private BoardController boardController;
+  private GameBoardController boardController;
   private Array<Array<AnimalModel>> animals;
   private int width, height;
   private int sizeAnimal;
   private Array<Vector2> listAniSelected;
   private Array<Vector2> listAniHint;
 
-  public BoardModel(BoardController boardController){
+  public BoardModel(GameBoardController boardController){
     this.boardController = boardController;
     updateInfoConfigBoard();
     initAnimals();

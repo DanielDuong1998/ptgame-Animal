@@ -3,6 +3,7 @@ package com.ss.OfficialPackage.views.logicViews;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.ss.OfficialPackage.configs.BoardConfig;
+import com.ss.OfficialPackage.models.DrawLineLaser;
 import com.ss.commons.Tweens;
 import com.ss.core.util.GLayerGroup;
 

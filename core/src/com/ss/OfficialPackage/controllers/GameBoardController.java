@@ -5,13 +5,17 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.ss.OfficialPackage.configs.BoardConfig;
 import com.ss.OfficialPackage.models.AnimalModel;
+import com.ss.OfficialPackage.models.AnimationBoard;
 import com.ss.OfficialPackage.models.BoardModel;
+import com.ss.OfficialPackage.models.SlideBoardModel;
+import com.ss.OfficialPackage.scenes.GameScene;
 import com.ss.OfficialPackage.views.logicViews.BoardUi;
 import com.ss.OfficialPackage.views.logicViews.CellUi;
 import com.ss.core.util.GLayer;
 import com.ss.core.util.GLayerGroup;
 import com.ss.core.util.GStage;
 import com.ss.gameLogic.objects.Combo;
+import com.ss.gameLogic.objects.EffHammer;
 
 public class GameBoardController {
   private GameMainController mainController;
@@ -265,7 +269,7 @@ public class GameBoardController {
       listPosition.add(new Vector2(cellUis.get((int)vt.x * BoardConfig.width + (int)vt.y).getX() + BoardConfig.paddingCellWidth/2,cellUis.get((int)vt.x * BoardConfig.width + (int)vt.y).getY() + BoardConfig.paddingCellHeight/2));
     }
 
-    new EffHammer(ClassicScene.effAni, listPosition,()->{
+    new EffHammer(GameScene.effAni, listPosition,()->{
       for(int i = 0; i < listVts.size; i++) {
         cellUis.get((int)listVts.get(i).x * BoardConfig.width + (int)listVts.get(i).y).makeShadow(false);
       }

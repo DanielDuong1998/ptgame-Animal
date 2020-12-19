@@ -9,6 +9,7 @@ public class BitmapFontC {
   public static BitmapFont FontAlert;
   public static BitmapFont Font_brown_thin;
   public static BitmapFont Font_Orange;
+  public static BitmapFont btnFont;
 
   public static void initBitmapFont(){
     font_white      = GAssetsManager.getBitmapFont("fontWhite.fnt");
@@ -16,5 +17,6 @@ public class BitmapFontC {
     font_brown      = GAssetsManager.getBitmapFont("font_brown.fnt");
     Font_brown_thin = GAssetsManager.getBitmapFont("font_brown_thin.fnt");
     Font_Orange     = GAssetsManager.getBitmapFont("font_orange.fnt");
+    btnFont = GAssetsManager.getBitmapFont("font.fnt");
   }
 }

@@ -13,6 +13,7 @@ import com.ss.core.util.GLayerGroup;
 import com.ss.core.util.GScreen;
 import com.ss.core.util.GStage;
 import com.ss.gameLogic.objects.Combo;
+import com.ss.gameLogic.objects.Timer;
 
 public class GameMainController {
   private GLayerGroup boxUiGroup, animalUiGroup, gShapeCustomGroup;
@@ -25,7 +26,7 @@ public class GameMainController {
   private Timer timer;
   private Combo combo;
 
-  public MainController(Combo combo){
+  public GameMainController(Combo combo){
     this.combo = combo;
 
     initGroup();

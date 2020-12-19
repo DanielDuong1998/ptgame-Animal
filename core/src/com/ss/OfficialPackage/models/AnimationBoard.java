@@ -3,6 +3,7 @@ package com.ss.OfficialPackage.models;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.ss.OfficialPackage.configs.BoardConfig;
+import com.ss.OfficialPackage.views.logicViews.CellUi;
 import com.ss.core.util.GLayerGroup;
 
 public class AnimationBoard {
