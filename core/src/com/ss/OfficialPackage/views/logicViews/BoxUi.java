@@ -22,7 +22,7 @@ public class BoxUi {
   }
 
   private void initShape(){
-    shape = GUI.createImage(TextureAtlasC.playAtlas, "cucxilau5");
+    shape = GUI.createImage(TextureAtlasC.playAtlas, "cucxilau3");
     shape.setSize(shape.getWidth()* BoardConfig.scallingBox, shape.getHeight()*BoardConfig.scallingBox);
     group.addActor(shape);
   }

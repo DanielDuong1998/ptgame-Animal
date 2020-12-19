@@ -43,7 +43,6 @@ public class Timer extends GLayerGroup {
       ef.free();
       this.clearActions();
     }
-    setTime(BoardConfig.getTimerOfTimer(BoardConfig.level));
     System.out.println("let go!");
     this.onComplete     = callback;
     Effect();

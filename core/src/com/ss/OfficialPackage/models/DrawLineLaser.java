@@ -55,6 +55,7 @@ public class DrawLineLaser {
     Gdx.app.error("laser null","in getlaser1()");
     return null;
   }
+
   private static Image getLaser2(){
     for (Image img: arrLaser2){
       if(img.getName().equals("inAlive")){
@@ -63,9 +64,10 @@ public class DrawLineLaser {
         return img;
       }
     }
-    Gdx.app.error("laser null","in getlaser1()");
+    Gdx.app.error("laser null","in getlaser2()");
     return null;
   }
+
   public static void DrawLine(Vector2 obj1, Vector2 obj2){
 
     float x1 = obj1.x;

@@ -5,7 +5,10 @@ package com.ss.OfficialPackage.scenes;
 //import com.ss.OfficialPackage.views.ClassicScene.HardView.ClassicHardView;
 import com.ss.OfficialPackage.configs.Config;
 import com.ss.OfficialPackage.controllers.GameMainController;
+import com.ss.OfficialPackage.models.DrawLineLaser;
 import com.ss.OfficialPackage.views.hardViews.GameHardView;
+import com.ss.commons.LoadParticle;
+import com.ss.commons.PaticleConvert;
 import com.ss.core.util.GLayer;
 import com.ss.core.util.GLayerGroup;
 import com.ss.core.util.GScreen;
@@ -30,7 +33,12 @@ public class GameScene extends GScreen {
   public void init() {
     System.out.println("initClassic scenes");
 
+    new PaticleConvert();
+    LoadParticle.init();
+    DrawLineLaser.initDrawLineLaser();
+
     startMusic();
+    initEffDead();
     initCombo();
     initGroup();
     initController();
@@ -39,6 +47,10 @@ public class GameScene extends GScreen {
 
   private void startMusic(){
 
+  }
+
+  private void initEffDead(){
+    effAni = new EffAniDead();
   }
 
   private void initCombo(){

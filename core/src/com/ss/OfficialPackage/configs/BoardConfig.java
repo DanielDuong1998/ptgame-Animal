@@ -15,14 +15,15 @@ public class BoardConfig {
   public static int maxQuantityInitAnimal = 20; // số lượng con trong pool lúc init mỗi loại
   public static float widthScreen = GStage.getWorldWidth();
   public static float heightScreen = GStage.getWorldHeight();
-  public static float scallingBox = 1.21f; // tỉ lệ scale boxUI
-  public static float scallingAni = scallingBox*(float)1.35f/1.21f; // tỉ lệ scale aniUI
-  public static float paddingCellWidth = 58*scallingBox; //khoản cách giữa các ô
-  public static float paddingCellHeight = 66*scallingBox; //khoản cách giữa các ô
+  public static float scallingBox = 1.05f; // tỉ lệ scale boxUI
+  //    public static float scallingAni = scallingBox*(float)1.35f/1.21f; // tỉ lệ scale aniUI
+  public static float scallingAni = scallingBox*0.9f; // tỉ lệ scale aniUI
+  public static float paddingCellWidth = 65*scallingBox; //khoản cách giữa các ô
+  public static float paddingCellHeight = 78*scallingBox; //khoản cách giữa các ô
   public static float paddingGameWidth = (widthScreen - paddingCellWidth*width)/2; // padding board game so với biên màn hình
   public static float paddingGameHeight = (heightScreen - paddingCellHeight*height)/1.2f; // padding board game so với biên màn hình
-  public static float paddingAniBoxW = 5; // padding animalUI so với biên BoxUI
-  public static float paddingAniBoxH = 10; // padding animalUI so với biên BoxUI
+  public static float paddingAniBoxW = 1.05f*65*0.05f; // padding animalUI so với biên BoxUI
+  public static float paddingAniBoxH = 1.05f*78*0.05f; // padding animalUI so với biên BoxUI
 
   // animation start board:
   public static int isLeft2Right = 1;
@@ -30,8 +31,20 @@ public class BoardConfig {
   public static int modeTestAniBoard = 1;
   public static int modeSlide = -1;
   public static int quantityAnimalThunder = 6;
-  ///// test combo////////
-  public static int countcombo = 0;
+  ///// combo////////
+  public static int countcombo   = 0;
+  ///// duration rocket fly////
+  public static float duraRocket = 0.025f;
+  //// init suport itemt /////
+  public static int    ItHint          = 3;
+  public static int    ItSwap          = 4;
+  public static int    ItThunder       = 5;
+  public static int    RewardHint      = 1;
+  public static int    RewardSwap      = 2;
+  public static int    RewardThunder   = 1;
+  public static String nameHint        = "Hint";
+  public static String nameSwap        = "Swap";
+  public static String nameThunder     = "Thunder";
 
   //score
   public static int aScore = 3;
@@ -39,12 +52,4 @@ public class BoardConfig {
   public static int timeBaseScore = 1;
   public static int toolScore = 30;
   public static int level = 1;
-
-
-  public static int getTimerOfTimer(int level){
-    switch (level){
-      case 1: return 300;
-      default: return 300;
-    }
-  }
 }
