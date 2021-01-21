@@ -6,9 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.ss.GMain;
+import com.ss.OfficialPackage.configs.BoardConfig;
 import com.ss.OfficialPackage.configs.Config;
 import com.ss.OfficialPackage.controllers.StartMainController;
 import com.ss.OfficialPackage.scenes.GameScene;
+import com.ss.OfficialPackage.views.logicViews.PauseOption;
 import com.ss.commons.BitmapFontC;
 import com.ss.commons.LabelC;
 import com.ss.commons.TextureAtlasC;
@@ -34,10 +37,11 @@ public class StartHardView {
     initIsContinue();
     initUi();
     initEvent();
+    //PauseOption pauseOption = new PauseOption();
   }
 
   private void initIsContinue(){
-    isContinue = true;
+    isContinue = GMain.prefs.getBoolean("isContinue", false);
   }
 
   private void initUi(){
@@ -144,7 +148,22 @@ public class StartHardView {
 
   private void initEvent(){
     gshapeBtnContinue.addListener(new ClickListener(){
+      @Override
+      public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        if(!isClick){
+          isClick = true;
+          System.out.println("new game click");
+          SoundEffect.Play(SoundEffect.click);
+          startMainController.setScreen(new GameScene());
+        }
+        return super.touchDown(event, x, y, pointer, button);
+      }
 
+      @Override
+      public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+        super.touchUp(event, x, y, pointer, button);
+        isClick = false;
+      }
     });
 
     gshapeBtnNewGame.addListener(new ClickListener(){
@@ -154,6 +173,10 @@ public class StartHardView {
           isClick = true;
           System.out.println("new game click");
           SoundEffect.Play(SoundEffect.click);
+          GMain.prefs.putBoolean("isContinue", false);
+          GMain.prefs.putBoolean("isContinueInLevel", false);
+          BoardConfig.level = 1;
+          GMain.prefs.flush();
           startMainController.setScreen(new GameScene());
         }
         return super.touchDown(event, x, y, pointer, button);

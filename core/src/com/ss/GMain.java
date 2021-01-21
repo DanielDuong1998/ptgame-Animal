@@ -101,7 +101,7 @@ public class GMain extends GDirectedGame {
   }
 
   private void initPrefs(){
-    prefs = Gdx.app.getPreferences("My Preferences5");
+    prefs = Gdx.app.getPreferences("AnimalProject");
   }
 
   public void dispose()

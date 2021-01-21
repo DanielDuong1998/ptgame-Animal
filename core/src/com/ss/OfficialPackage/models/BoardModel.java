@@ -2,6 +2,7 @@ package com.ss.OfficialPackage.models;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.ss.GMain;
 import com.ss.OfficialPackage.configs.BoardConfig;
 import com.ss.OfficialPackage.controllers.GameBoardController;
 
@@ -74,7 +75,15 @@ public class BoardModel {
   }
 
   private void initAnimals(){
-    Array<Integer> ids = initIdsArray();
+    Array<Integer> ids;
+    boolean isContinue = GMain.prefs.getBoolean("isContinueInLevel", false);
+    if(isContinue){
+      ids = initIdsArrayOld();
+    }
+    else {
+      ids = initIdsArray();
+    }
+
     initAnimalsWithIdsArray(ids);
 
     Array<Vector2> hint = findHint();
@@ -82,6 +91,25 @@ public class BoardModel {
       shuffle();
       hint = findHint();
     }
+  }
+
+  private Array<Integer> initIdsArrayOld(){
+    Array<Integer> ids;
+
+    String arrStr = GMain.prefs.getString("arr");
+    ids = parseArrayAnimalModelToArray(arrStr);
+    return ids;
+  }
+
+  private Array<Integer> parseArrayAnimalModelToArray(String str){
+    Array<Integer> ids = new Array<>();
+    String[] elements = str.split("#");
+    for(int i = 0; i < elements.length; i++) {
+      ids.add(Integer.parseInt(elements[i]));
+    }
+
+    System.out.println("ids:... + " + ids.toString());
+    return ids;
   }
 
   private Array<Integer> initIdsArray(){

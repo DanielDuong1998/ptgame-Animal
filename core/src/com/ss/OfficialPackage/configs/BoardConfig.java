@@ -1,5 +1,6 @@
 package com.ss.OfficialPackage.configs;
 
+import com.ss.GMain;
 import com.ss.core.util.GStage;
 
 public class BoardConfig {

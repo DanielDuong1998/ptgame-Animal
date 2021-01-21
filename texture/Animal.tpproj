@@ -110,7 +110,7 @@ limitMemory=true
 useIndexes=false
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-inputFiles=[{path:component/btn_red.png,type:Input,regionName:null},{path:component/btn_yellow.png,type:Input,regionName:null},{path:component/logo.png,type:Input,regionName:null},{path:component/panel.png,type:Input,regionName:null},{path:component/btn_exit.png,type:Input,regionName:null},{path:component/btn_setting.png,type:Input,regionName:null},{path:component/btn_guide.png,type:Input,regionName:null},{path:component/btn_leaderboard.png,type:Input,regionName:null},{path:component/btn_shop.png,type:Input,regionName:null}]
+inputFiles=[{path:component/btn_red.png,type:Input,regionName:null},{path:component/btn_yellow.png,type:Input,regionName:null},{path:component/logo.png,type:Input,regionName:null},{path:component/panel.png,type:Input,regionName:null},{path:component/btn_exit.png,type:Input,regionName:null},{path:component/btn_setting.png,type:Input,regionName:null},{path:component/btn_guide.png,type:Input,regionName:null},{path:component/btn_leaderboard.png,type:Input,regionName:null},{path:component/btn_shop.png,type:Input,regionName:null},{path:component/btnSfxOff.png,type:Input,regionName:null},{path:component/btnSfxOn.png,type:Input,regionName:null},{path:component/btnMusicOff.png,type:Input,regionName:null},{path:component/btnMusicOn.png,type:Input,regionName:null},{path:component/frameTitle.png,type:Input,regionName:null}]
 
 
 -PROJ-

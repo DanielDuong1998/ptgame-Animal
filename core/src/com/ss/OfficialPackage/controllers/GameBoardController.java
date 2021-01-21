@@ -11,6 +11,7 @@ import com.ss.OfficialPackage.models.SlideBoardModel;
 import com.ss.OfficialPackage.scenes.GameScene;
 import com.ss.OfficialPackage.views.logicViews.BoardUi;
 import com.ss.OfficialPackage.views.logicViews.CellUi;
+import com.ss.OfficialPackage.views.logicViews.Rocket;
 import com.ss.core.util.GLayer;
 import com.ss.core.util.GLayerGroup;
 import com.ss.core.util.GStage;
@@ -27,6 +28,10 @@ public class GameBoardController {
   private Combo combo;
   private int bestCombo = 0;
   private int score = 0;
+  private Array<Vector2> hint;
+  private Vector2 cellTouch;
+
+
 
   public GameBoardController(GameMainController mainController, Array<CellUi> cellUis){
     this.mainController = mainController;
@@ -57,6 +62,11 @@ public class GameBoardController {
   }
 
   public void cellTouchDown(int row, int col){
+    if(cellTouch == null){
+      cellTouch = new Vector2();
+    }
+    cellTouch.set(new Vector2(row, col));
+
     Array<Vector2> path = boardModel.cellTouchDown(row, col);
     if(path.size == 0){
 
@@ -79,6 +89,7 @@ public class GameBoardController {
       combo.upTime(BoardConfig.countcombo);
 
       score += (BoardConfig.baseScore + ((Math.max(BoardConfig.countcombo - 1, 0)) * BoardConfig.aScore));
+      mainController.updateScore(score);
       System.out.println("score: " + score);
 
       Vector2 vt1 = path.get(0);
@@ -92,28 +103,53 @@ public class GameBoardController {
       System.out.println("path: " + path);
 
       pathGroup.addAction(Actions.sequence(
-              Actions.delay(0.1f),
-              Actions.run(()->{
-                slideBoard(path);
-              })));
+        Actions.delay(0.1f),
+        Actions.run(()->{
+          slideBoard(path);
+        })));
 
       float dur = thunderFlag ? 0.38f : 0.35f;
 
       pathGroup.addAction(Actions.sequence(
-              Actions.delay(dur),
+        Actions.delay(dur),
 //        Actions.run(this::shuffleBoardIfNotHintOrWinGame)
-              Actions.run(()->{
-                if(thunderFlag){
-                  final Array<Vector2> listVt = boardModel.thunder();
-                  System.out.println("listVt: "+ listVt);
-                  // ten lua tai day
+        Actions.run(()->{
+          if(thunderFlag){
+            final Array<Vector2> listVt = boardModel.thunder();
+            System.out.println("listVt: "+ listVt);
+            // ten lua tai day
+            Rocket rocket1 = mainController.getRocket();
+            Rocket rocket2 = mainController.getRocket();
+            if(rocket1 != null && rocket2 != null){
+              Vector2 des1 = new Vector2(cellUis.get((int) listVt.get(0).x * BoardConfig.width + (int) listVt.get(0).y).getX(),
+                      cellUis.get((int) listVt.get(0).x * BoardConfig.width + (int) listVt.get(0).y).getY());
+              Vector2 des2 = new Vector2(cellUis.get((int) listVt.get(1).x * BoardConfig.width + (int) listVt.get(1).y).getX(),
+                      cellUis.get((int) listVt.get(1).x * BoardConfig.width + (int) listVt.get(1).y).getY());
 
-                  thunder(listVt);
-                }
-                else {
-                  shuffleBoardIfNotHintOrWinGame();
-                }
+              Vector2 start1 = new Vector2(cellUis.get((int) vt1.x * BoardConfig.width + (int)vt1.y).getX(),
+                      cellUis.get((int) vt1.x * BoardConfig.width + (int)vt1.y).getY());
+              Vector2 start2 = new Vector2(cellUis.get((int) vt2.x * BoardConfig.width + (int)vt2.y).getX(),
+                      cellUis.get((int) vt2.x * BoardConfig.width + (int)vt2.y).getY());
+
+              des1.set(des1.x + BoardConfig.paddingCellWidth/2, des1.y + BoardConfig.paddingCellHeight/2);
+              des2.set(des2.x + BoardConfig.paddingCellWidth/2, des2.y + BoardConfig.paddingCellHeight/2);
+              rocket1.showRocket(true);
+              rocket2.showRocket(true);
+              rocket1.moveRocket(start1, des1);
+              rocket2.moveRocket(start2, des2);
+            }
+
+            pathGroup.addAction(Actions.sequence(
+              Actions.delay(0.3f),
+              Actions.run(()->{
+                thunder(listVt);
               })
+            ));
+          }
+          else {
+            shuffleBoardIfNotHintOrWinGame();
+          }
+        })
       ));
     }
   }
@@ -141,6 +177,9 @@ public class GameBoardController {
     fitSlidePosition();
   }
   private void shuffleBoardIfNotHintOrWinGame(){
+    //save Game
+    mainController.saveGame(mainController.getResTime(), true, true, BoardConfig.level);
+
     if(boardModel.getQuantityAnimal() > 0){
       shuffleBoardIfNotHint();
     }
@@ -150,7 +189,7 @@ public class GameBoardController {
   }
 
   private void winGame(){
-    mainController.winGame(score);
+    mainController.winGame(score, bestCombo);
     System.out.println("win game, best combo: " + bestCombo);
   }
 
@@ -179,6 +218,8 @@ public class GameBoardController {
       }
     }
 
+    // save game
+    mainController.saveGame(mainController.getResTime(), true, true, BoardConfig.level);
 
   }
 
@@ -189,7 +230,7 @@ public class GameBoardController {
 
   public void getHint(){
     boardModel.unSelect();
-    Array<Vector2> hint = boardModel.findHint();
+     hint = boardModel.findHint();
     showHint(hint);
   }
 
@@ -223,43 +264,60 @@ public class GameBoardController {
     }
     Vector2 vt1 = listVt.get(0);
     Vector2 vt2 = listVt.get(1);
-    boolean thunderFlag = cellUis.get((int)vt1.x * BoardConfig.width + (int)vt1.y).getId() == BoardConfig.thunderId;
+//    boolean thunderFlag = cellUis.get((int)vt1.x * BoardConfig.width + (int)vt1.y).getId() == BoardConfig.thunderId;
+    boolean thunderFlag = false;
     cellUis.get((int)vt1.x * BoardConfig.width + (int)vt1.y).enableClick(false);
     cellUis.get((int)vt2.x * BoardConfig.width + (int)vt2.y).enableClick(false);
     BoardConfig.countcombo++;
     combo.upTime(BoardConfig.countcombo);
     cellUis.get((int)vt1.x * BoardConfig.width + (int)vt1.y).matchCell();
     cellUis.get((int)vt2.x * BoardConfig.width + (int)vt2.y).matchCell();
+
+    BoardConfig.countcombo++;
+    updateBestCombo();
+    combo.upTime(BoardConfig.countcombo);
+
+    score += (BoardConfig.baseScore + ((Math.max(BoardConfig.countcombo - 1, 0)) * BoardConfig.aScore));
+    mainController.updateScore(score);
+
     SoundEffect.Play(SoundEffect.mmatch);
     //boardUi.drawPath(path);
     // System.out.println("path: " + path);
 
     pathGroup.addAction(Actions.sequence(
-            Actions.delay(0.1f),
-            Actions.run(()->{
-              slideBoard(listVt);
-            })));
+      Actions.delay(0.1f),
+      Actions.run(()->{
+        slideBoard(listVt);
+      })));
 
     float dur = thunderFlag ? 0.38f : 0.35f;
     pathGroup.addAction(Actions.sequence(
-            Actions.delay(dur),
+      Actions.delay(dur),
 //      Actions.run(this::shuffleBoardIfNotHintOrWinGame)
-            Actions.run(()->{
-              if(thunderFlag){
-                final Array<Vector2> listVt2 = boardModel.thunder();
-                // ten lua tai day
-                System.out.println("listvt: " + listVt2);
+      Actions.run(()->{
+        if(thunderFlag){
+          final Array<Vector2> listVt2 = boardModel.thunder();
+          // ten lua tai day
+          System.out.println("listvt: " + listVt2);
 
-                thunder(listVt2);
-              }
-              else {
-                shuffleBoardIfNotHintOrWinGame();
-              }
-            })
+          thunder(listVt2);
+        }
+        else {
+          shuffleBoardIfNotHintOrWinGame();
+        }
+      })
     ));
   }
 
   public void thunder2(){
+    if(hint != null){
+      unSelectCellUi(hint.get(0));
+      unSelectCellUi(hint.get(1));
+    }
+    if(cellTouch != null){
+      unSelectCellUi(cellTouch);
+    }
+
     Array<Vector2> listVts = boardModel.thunder2();
     System.out.println("list vts: "+ listVts);
     if(listVts.size == 0){
@@ -282,24 +340,24 @@ public class GameBoardController {
     shadowAllCellUi(true);
 
     pathGroup.addAction(Actions.sequence(
-            Actions.delay(4),
-            Actions.run(()->{
-              for(int i = 0; i < listVts.size; i++) {
-                cellUis.get((int)listVts.get(i).x * BoardConfig.width + (int)listVts.get(i).y).matchCell();
-              }
+      Actions.delay(4),
+      Actions.run(()->{
+        for(int i = 0; i < listVts.size; i++) {
+          cellUis.get((int)listVts.get(i).x * BoardConfig.width + (int)listVts.get(i).y).matchCell();
+        }
 
-              pathGroup.addAction(Actions.sequence(
-                      Actions.delay(0.1f),
-                      Actions.run(()->{
-                        slideBoardManyAnimal(listVts);
-                      })
-              ));
+        pathGroup.addAction(Actions.sequence(
+          Actions.delay(0.1f),
+          Actions.run(()->{
+            slideBoardManyAnimal(listVts);
+          })
+        ));
 
-              pathGroup.addAction(Actions.sequence(
-                      Actions.delay(0.35f),
-                      Actions.run(this::shuffleBoardIfNotHintOrWinGame)
-              ));
-            })
+        pathGroup.addAction(Actions.sequence(
+          Actions.delay(0.35f),
+          Actions.run(this::shuffleBoardIfNotHintOrWinGame)
+        ));
+      })
     ));
   }
 
@@ -358,5 +416,26 @@ public class GameBoardController {
 
   private void  updateBestCombo(){
     if(BoardConfig.countcombo > bestCombo) bestCombo = BoardConfig.countcombo;
+  }
+
+  public void setPause(boolean isPause){
+    combo.setPause(isPause);
+
+  }
+
+  public Vector2 getScoreAndBestCombo(){
+    return new Vector2(score, bestCombo);
+  }
+
+  public Array<Array<AnimalModel>> getAnimalModel(){
+    return boardModel.getAnimals();
+  }
+
+  public int getScore(){
+    return score;
+  }
+
+  public void setScore(int score){
+    this.score = score;
   }
 }

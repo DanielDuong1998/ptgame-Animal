@@ -80,7 +80,7 @@ public class CellUi {
       Gdx.app.error("CellUI.java - initGShapeCustom", "shadowShape is null");
     }
     else {
-      shadowShape.setSize(boxUi.getWidth()*0.95f, boxUi.getHeight()*0.9f);
+      shadowShape.setSize(boxUi.getWidth(), boxUi.getHeight());
     }
 
   }
@@ -298,12 +298,12 @@ public class CellUi {
   public void makeShadow(boolean isShadow){
     if(isShadow){
       System.out.println("shadow show");
-//      shadowShape.setVisible(true);
-      animalUi.showShadow(true);
+      shadowShape.setVisible(true);
+      //animalUi.showShadow(true);
     }
     else {
-      animalUi.showShadow(false);
-//      shadowShape.setVisible(false);
+      //animalUi.showShadow(false);
+      shadowShape.setVisible(false);
     }
   }
 }

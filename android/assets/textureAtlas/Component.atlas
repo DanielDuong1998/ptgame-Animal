@@ -4,65 +4,100 @@ size: 2048,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+btnMusicOff
+  rotate: false
+  xy: 1493, 335
+  size: 215, 105
+  orig: 215, 105
+  offset: 0, 0
+  index: -1
+btnMusicOn
+  rotate: false
+  xy: 2, 2
+  size: 214, 108
+  orig: 214, 108
+  offset: 0, 0
+  index: -1
+btnSfxOff
+  rotate: false
+  xy: 218, 5
+  size: 213, 105
+  orig: 213, 105
+  offset: 0, 0
+  index: -1
+btnSfxOn
+  rotate: false
+  xy: 1277, 332
+  size: 214, 108
+  orig: 214, 108
+  offset: 0, 0
+  index: -1
 btn_exit
   rotate: false
-  xy: 1330, 323
+  xy: 1497, 233
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 btn_guide
   rotate: false
-  xy: 1228, 323
+  xy: 433, 10
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 btn_leaderboard
   rotate: false
-  xy: 1228, 221
+  xy: 1930, 340
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 btn_red
   rotate: false
-  xy: 2, 2
+  xy: 1710, 349
   size: 218, 91
   orig: 218, 91
   offset: 0, 0
   index: -1
 btn_setting
   rotate: false
-  xy: 1330, 221
+  xy: 1599, 233
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 btn_shop
   rotate: false
-  xy: 1432, 323
+  xy: 1228, 137
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 btn_yellow
   rotate: false
-  xy: 573, 123
+  xy: 1277, 239
   size: 218, 91
   orig: 218, 91
   offset: 0, 0
   index: -1
+frameTitle
+  rotate: false
+  xy: 573, 281
+  size: 702, 159
+  orig: 702, 159
+  offset: 0, 0
+  index: -1
 logo
   rotate: false
-  xy: 573, 216
+  xy: 573, 72
   size: 653, 207
   orig: 653, 207
   offset: 0, 0
   index: -1
 panel
   rotate: false
-  xy: 2, 95
+  xy: 2, 112
   size: 569, 328
   orig: 569, 328
   offset: 0, 0

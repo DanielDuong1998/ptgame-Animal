@@ -50,9 +50,10 @@ public class Timer extends GLayerGroup {
   }
 
   public void setTime(int time){
-    this.duration =time;
-    this.resDura  =this.duration;
+    this.duration = time;
+    this.resDura  = this.duration;
   }
+
   public void ActionScaleTime(){
     this.action = new TemporalAction(duration, Interpolation.linear) {
       /* access modifiers changed from: protected */
@@ -83,6 +84,10 @@ public class Timer extends GLayerGroup {
     return resDura;
   }
 
+  public void setResDura(int resDura){
+    this.resDura = resDura;
+  }
+
   public String getResTimeStr(){
     int minute = resDura/60;
     int second = resDura%60;
@@ -94,6 +99,11 @@ public class Timer extends GLayerGroup {
 
   private void Effect(){
     ef = GParticleSystem.getGParticleSystem("fireTime").create(this, frmTime.getX()+TimeBar.getWidth(),frmTime.getY()+TimeBar.getHeight()/2);
+  }
+
+  public void setActionTime(float res){
+    System.out.println("res: " + res);
+    this.action.setTime(res);
   }
 
 }

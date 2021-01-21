@@ -63,7 +63,7 @@ public class GameScene extends GScreen {
   }
 
   private void initController(){
-    gameMainController = new GameMainController(combo);
+    gameMainController = new GameMainController(this, combo);
   }
 
   private void initHardView(){

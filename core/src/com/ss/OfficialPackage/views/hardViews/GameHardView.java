@@ -2,9 +2,13 @@ package com.ss.OfficialPackage.views.hardViews;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.ss.OfficialPackage.configs.Config;
 import com.ss.OfficialPackage.controllers.GameMainController;
+import com.ss.OfficialPackage.views.logicViews.PauseOption;
+import com.ss.commons.BitmapFontC;
+import com.ss.commons.LabelC;
 import com.ss.commons.TextureAtlasC;
 import com.ss.core.util.GLayerGroup;
 import com.ss.core.util.GStage;
@@ -20,6 +24,7 @@ public class GameHardView {
   private Timer timer;
   private Image btnShuffle, btnHint, btnThunder, btnPause;
   private boolean isClick = false;
+  private LabelC txtScore, txtLevel;
 
   public GameHardView(GLayerGroup group, GameMainController gameMainController){
      this.group = group;
@@ -28,6 +33,7 @@ public class GameHardView {
     initUi();
     initEvent();
     initTimeUI();
+
 
   }
 
@@ -39,6 +45,9 @@ public class GameHardView {
     btnPause = GUI.createImage(TextureAtlasC.playAtlas, "btn_pause");
     newGameBtn = GUI.createImage(TextureAtlasC.playAtlas, "cucxilau1");
 
+    txtScore = new LabelC("Score: 0", new Label.LabelStyle(BitmapFontC.btnFont, null));;
+    txtLevel = new LabelC("Level: 1", new Label.LabelStyle(BitmapFontC.btnFont, null));;
+
 
     group.addActor(bg);
     group.addActor(newGameBtn);
@@ -46,6 +55,8 @@ public class GameHardView {
     group.addActor(btnHint);
     group.addActor(btnThunder);
     group.addActor(btnPause);
+    group.addActor(txtScore);
+    group.addActor(txtLevel);
 
     bg.setSize(Config.widthDevice, Config.heightDevice);
 
@@ -54,6 +65,11 @@ public class GameHardView {
     btnHint.setPosition(btnShuffle.getX() + btnShuffle.getWidth() + 20, 0);
     btnThunder.setPosition(btnHint.getX() + btnHint.getWidth() + 20, 0);
     btnPause.setPosition(Config.widthDevice - btnPause.getWidth() - 20, 0);
+    txtScore.setPosition(btnThunder.getX() + btnHint.getWidth() + 20, 0);
+    txtLevel.setPosition(Config.widthDevice*0.65f, 0);
+
+    gameMainController.addTxtScore(txtScore);
+    gameMainController.addTxtLevel(txtLevel);
   }
 
   private void initEvent(){
@@ -130,7 +146,9 @@ public class GameHardView {
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         if(!isClick){
+          SoundEffect.Play(SoundEffect.click1);
           isClick = true;
+          gameMainController.pause(true);
         }
         return super.touchDown(event, x, y, pointer, button);
       }
@@ -144,7 +162,7 @@ public class GameHardView {
   }
 
   private void initTimeUI(){
-    timer = new Timer(GStage.getWorldWidth()/2, 30, 100);
+    timer = new Timer(GStage.getWorldWidth()/2, 30, 360);
     timer.setScale(0.5f);
     group.addActor(timer);
     timer.setVisible(false);

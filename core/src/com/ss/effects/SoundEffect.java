@@ -70,6 +70,16 @@ public class SoundEffect {
     return id;
   }
 
+  public static void setMuteVfx(boolean isMute){
+    muteSfx = isMute;
+  }
+
+  public static void setMuteMusic(boolean isMute){
+    muteMusic = isMute;
+    if(isMute) Stopmusic(1);
+    else Playmusic(1);
+  }
+
   public static void Playmusic(int mode) {
     muteMusic = false;
     switch (mode) {
