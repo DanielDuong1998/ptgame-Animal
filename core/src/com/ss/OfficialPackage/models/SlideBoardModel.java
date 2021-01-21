@@ -14,16 +14,16 @@ public class SlideBoardModel {
         return slideHorizontalOrVerticalOfficial(animals, vt1, vt2, false, true);
       }
       case 2: {
-        return slideStraightInfAllBoardS1(animals);
-      }
-      case 3: {
         return slideHorizontalOrVerticalOfficial(animals, vt1, vt2, false, false);
       }
+      case 3: {
+        return slideStraightInfAllBoardS1(animals);
+      }
       case 4: {
-        return slideCircleMode1(animals);
+        return slideFocus(animals, vt1, vt2, true, false);
       }
       case 5: {
-        return slideFocus(animals, vt1, vt2, true, false);
+        return slideCircleMode1(animals);
       }
       case 6: {
         return slideFocus(animals, vt1, vt2, false, true);
