@@ -118,34 +118,39 @@ public class GameBoardController {
             final Array<Vector2> listVt = boardModel.thunder();
             System.out.println("listVt: "+ listVt);
             // ten lua tai day
-            Rocket rocket1 = mainController.getRocket();
-            Rocket rocket2 = mainController.getRocket();
-            if(rocket1 != null && rocket2 != null){
-              Vector2 des1 = new Vector2(cellUis.get((int) listVt.get(0).x * BoardConfig.width + (int) listVt.get(0).y).getX(),
-                      cellUis.get((int) listVt.get(0).x * BoardConfig.width + (int) listVt.get(0).y).getY());
-              Vector2 des2 = new Vector2(cellUis.get((int) listVt.get(1).x * BoardConfig.width + (int) listVt.get(1).y).getX(),
-                      cellUis.get((int) listVt.get(1).x * BoardConfig.width + (int) listVt.get(1).y).getY());
+            if(listVt != null && listVt.size != 0){
+              Rocket rocket1 = mainController.getRocket();
+              Rocket rocket2 = mainController.getRocket();
+              if(rocket1 != null && rocket2 != null){
+                Vector2 des1 = new Vector2(cellUis.get((int) listVt.get(0).x * BoardConfig.width + (int) listVt.get(0).y).getX(),
+                        cellUis.get((int) listVt.get(0).x * BoardConfig.width + (int) listVt.get(0).y).getY());
+                Vector2 des2 = new Vector2(cellUis.get((int) listVt.get(1).x * BoardConfig.width + (int) listVt.get(1).y).getX(),
+                        cellUis.get((int) listVt.get(1).x * BoardConfig.width + (int) listVt.get(1).y).getY());
 
-              Vector2 start1 = new Vector2(cellUis.get((int) vt1.x * BoardConfig.width + (int)vt1.y).getX(),
-                      cellUis.get((int) vt1.x * BoardConfig.width + (int)vt1.y).getY());
-              Vector2 start2 = new Vector2(cellUis.get((int) vt2.x * BoardConfig.width + (int)vt2.y).getX(),
-                      cellUis.get((int) vt2.x * BoardConfig.width + (int)vt2.y).getY());
+                Vector2 start1 = new Vector2(cellUis.get((int) vt1.x * BoardConfig.width + (int)vt1.y).getX(),
+                        cellUis.get((int) vt1.x * BoardConfig.width + (int)vt1.y).getY());
+                Vector2 start2 = new Vector2(cellUis.get((int) vt2.x * BoardConfig.width + (int)vt2.y).getX(),
+                        cellUis.get((int) vt2.x * BoardConfig.width + (int)vt2.y).getY());
 
-              des1.set(des1.x + BoardConfig.paddingCellWidth/2, des1.y + BoardConfig.paddingCellHeight/2);
-              des2.set(des2.x + BoardConfig.paddingCellWidth/2, des2.y + BoardConfig.paddingCellHeight/2);
-              rocket1.showRocket(true);
-              rocket2.showRocket(true);
-              rocket1.moveRocket(start1, des1);
-              rocket2.moveRocket(start2, des2);
-              SoundEffect.Play(SoundEffect.rocket);
+                des1.set(des1.x + BoardConfig.paddingCellWidth/2, des1.y + BoardConfig.paddingCellHeight/2);
+                des2.set(des2.x + BoardConfig.paddingCellWidth/2, des2.y + BoardConfig.paddingCellHeight/2);
+                rocket1.showRocket(true);
+                rocket2.showRocket(true);
+                rocket1.moveRocket(start1, des1);
+                rocket2.moveRocket(start2, des2);
+                SoundEffect.Play(SoundEffect.rocket);
+              }
+
+              pathGroup.addAction(Actions.sequence(
+                Actions.delay(0.3f),
+                Actions.run(()->{
+                  thunder(listVt);
+                })
+              ));
             }
-
-            pathGroup.addAction(Actions.sequence(
-              Actions.delay(0.3f),
-              Actions.run(()->{
-                thunder(listVt);
-              })
-            ));
+            else {
+              shuffleBoardIfNotHintOrWinGame();
+            }
           }
           else {
             shuffleBoardIfNotHintOrWinGame();
