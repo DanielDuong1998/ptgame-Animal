@@ -9,6 +9,7 @@ import com.ss.core.action.exAction.GSimpleAction;
 import com.ss.core.exSprite.GShapeSprite;
 import com.ss.core.util.GLayer;
 import com.ss.core.util.GStage;
+import com.ss.effects.SoundEffect;
 
 public class EffHammer {
   private EffAniDead      effAniDead;
@@ -28,13 +29,16 @@ public class EffHammer {
     group.addAction(Actions.sequence(
             Actions.scaleTo(1,1,0.5f, Interpolation.swingOut),
             GSimpleAction.simpleAction((d, a)->{
+              SoundEffect.Play(SoundEffect.apear);
               effectHamer(()->{
                 darkBg.setColor(0,0,0,0);
                 group.addAction(Actions.run(callbackHammer));
                 System.out.println("done effect hammer");
+                SoundEffect.Play(SoundEffect.thunder);
                 effectThunder(()->{
                   System.out.println("done effect thunder");
                   darkBg.remove();
+                  SoundEffect.Play(SoundEffect.bom);
                   group.addAction(Actions.run(callbackThunder));
                 });
               });

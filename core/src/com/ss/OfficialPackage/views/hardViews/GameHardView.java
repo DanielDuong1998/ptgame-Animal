@@ -1,12 +1,14 @@
 package com.ss.OfficialPackage.views.hardViews;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.ss.GMain;
+import com.ss.OfficialPackage.configs.BoardConfig;
 import com.ss.OfficialPackage.configs.Config;
 import com.ss.OfficialPackage.controllers.GameMainController;
-import com.ss.OfficialPackage.views.logicViews.PauseOption;
 import com.ss.commons.BitmapFontC;
 import com.ss.commons.LabelC;
 import com.ss.commons.TextureAtlasC;
@@ -20,7 +22,7 @@ public class GameHardView {
   private GLayerGroup group;
   private GameMainController gameMainController;
   private Image bg;
-  private Image newGameBtn;
+  private Image btnNextLv;
   private Timer timer;
   private Image btnShuffle, btnHint, btnThunder, btnPause;
   private boolean isClick = false;
@@ -34,7 +36,12 @@ public class GameHardView {
     initEvent();
     initTimeUI();
 
-
+    group.addAction(Actions.sequence(
+      Actions.delay(.8f),
+      Actions.run(()->{
+        gameMainController.startGame(timer);
+      })
+    ));
   }
 
   private void initUi(){
@@ -43,14 +50,14 @@ public class GameHardView {
     btnHint = GUI.createImage(TextureAtlasC.playAtlas, "btn_hint");
     btnThunder = GUI.createImage(TextureAtlasC.playAtlas, "btn_firework");
     btnPause = GUI.createImage(TextureAtlasC.playAtlas, "btn_pause");
-    newGameBtn = GUI.createImage(TextureAtlasC.playAtlas, "cucxilau1");
+    btnNextLv = GUI.createImage(TextureAtlasC.playAtlas, "cucxilau1");
 
     txtScore = new LabelC("Score: 0", new Label.LabelStyle(BitmapFontC.btnFont, null));;
     txtLevel = new LabelC("Level: 1", new Label.LabelStyle(BitmapFontC.btnFont, null));;
 
 
     group.addActor(bg);
-    group.addActor(newGameBtn);
+    group.addActor(btnNextLv);
     group.addActor(btnShuffle);
     group.addActor(btnHint);
     group.addActor(btnThunder);
@@ -58,28 +65,32 @@ public class GameHardView {
     group.addActor(txtScore);
     group.addActor(txtLevel);
 
+    btnNextLv.setVisible(BoardConfig.isShowBtnNextLv);
+
     bg.setSize(Config.widthDevice, Config.heightDevice);
 
-    newGameBtn.setPosition(200, 200);
     btnShuffle.setPosition(20, 0);
     btnHint.setPosition(btnShuffle.getX() + btnShuffle.getWidth() + 20, 0);
     btnThunder.setPosition(btnHint.getX() + btnHint.getWidth() + 20, 0);
     btnPause.setPosition(Config.widthDevice - btnPause.getWidth() - 20, 0);
     txtScore.setPosition(btnThunder.getX() + btnHint.getWidth() + 20, 0);
     txtLevel.setPosition(Config.widthDevice*0.65f, 0);
+    btnNextLv.setPosition(txtLevel.getX() + txtLevel.getWidth() + 20, 0);
 
     gameMainController.addTxtScore(txtScore);
     gameMainController.addTxtLevel(txtLevel);
   }
 
   private void initEvent(){
-    newGameBtn.addListener(new ClickListener(){
+    btnNextLv.addListener(new ClickListener(){
       @Override
       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
         if(!isClick){
           isClick = true;
           SoundEffect.Play(SoundEffect.click);
-          gameMainController.startGame(timer);
+          GMain.prefs.putBoolean("isContinueInLevel", false);
+          GMain.prefs.flush();
+          gameMainController.newGame();
         }
         return super.touchDown(event, x, y, pointer, button);
       }

@@ -17,17 +17,15 @@ import com.ss.core.util.GStage;
 import com.ss.core.util.GUI;
 import com.ss.effects.SoundEffect;
 
-public class PauseOption {
+public class PauseOptionC {
   private Group group;
   private GShapeSprite gshape;
   private Image frame, frameTitle, btnMusicOn, btnMusicOff, btnVFXOn, btnVFXOff, btnExit, btnClose;
   private LabelC txtBtnLobby, txtBtnClose;
   private LabelC title;
   private int clickCount = 0;
-  private GameMainController gameMainController;
 
-  public PauseOption(GameMainController gameMainController){
-    this.gameMainController = gameMainController;
+  public PauseOptionC(){
 
     initGroup();
     initUI();
@@ -82,16 +80,19 @@ public class PauseOption {
     frame.setPosition((Config.widthDevice - frame.getWidth())/2,(Config.heightDevice - frame.getHeight())/2);
     frameTitle.setPosition((Config.widthDevice - frameTitle.getWidth())/2,frame.getY() - frameTitle.getHeight()/2);
     btnExit.setPosition((Config.widthDevice - btnExit.getWidth())/2 - 0.6f*btnExit.getWidth(), (Config.heightDevice - btnExit.getHeight())/2 + btnExit.getHeight());
-    btnClose.setPosition((Config.widthDevice - btnClose.getWidth())/2 + 0.6f*btnExit.getWidth(), (Config.heightDevice - btnClose.getHeight())/2 + btnClose.getHeight());
+    btnClose.setPosition((frame.getX() + (frame.getWidth() - btnClose.getWidth())/2), (Config.heightDevice - btnClose.getHeight())/2 + btnClose.getHeight());
     btnMusicOn.setPosition((Config.widthDevice - btnMusicOn.getWidth())/2 - 0.6f*btnMusicOn.getWidth(), (Config.heightDevice - btnMusicOn.getHeight())/2 - btnMusicOn.getHeight());
     btnMusicOff.setPosition((Config.widthDevice - btnMusicOn.getWidth())/2 - 0.6f*btnMusicOn.getWidth(), (Config.heightDevice - btnMusicOn.getHeight())/2 - btnMusicOn.getHeight());
     btnVFXOn.setPosition((Config.widthDevice - btnMusicOn.getWidth())/2 + 0.6f*btnVFXOn.getWidth(), (Config.heightDevice - btnVFXOn.getHeight())/2 - btnVFXOn.getHeight());
     btnVFXOff.setPosition((Config.widthDevice - btnMusicOn.getWidth())/2 + 0.6f*btnVFXOn.getWidth(), (Config.heightDevice - btnVFXOn.getHeight())/2 - btnVFXOn.getHeight());
 
     txtBtnLobby.setPosition(btnExit.getX() + (btnExit.getWidth() - txtBtnLobby.getWidth())/2,
-                            btnExit.getY() + (btnExit.getHeight() - txtBtnLobby.getHeight())/2);
+            btnExit.getY() + (btnExit.getHeight() - txtBtnLobby.getHeight())/2);
     txtBtnClose.setPosition(btnClose.getX() + (btnClose.getWidth() - txtBtnClose.getWidth())/2,
             btnClose.getY() + (btnClose.getHeight() - txtBtnClose.getHeight())/2);
+
+    btnExit.setVisible(false);
+    txtBtnLobby.setVisible(false);
   }
 
   private void addEventClick(){
@@ -182,7 +183,8 @@ public class PauseOption {
         clickCount++;
         if(clickCount <= 1){
           SoundEffect.Play(SoundEffect.click);
-          gameMainController.pause(false);
+          //gameMainController.pause(false);
+          showSettingPanel(false);
         }
         return super.touchDown(event, x, y, pointer, button);
       }
@@ -200,7 +202,7 @@ public class PauseOption {
         clickCount++;
         if(clickCount <= 1){
           SoundEffect.Play(SoundEffect.click);
-          gameMainController.setScreen(new StartScene());
+          //gameMainController.setScreen(new StartScene());
         }
         return super.touchDown(event, x, y, pointer, button);
       }
@@ -221,5 +223,4 @@ public class PauseOption {
 
     group.setVisible(isShow);
   }
-
 }

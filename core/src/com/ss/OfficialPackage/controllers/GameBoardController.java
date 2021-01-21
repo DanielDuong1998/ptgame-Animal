@@ -137,6 +137,7 @@ public class GameBoardController {
               rocket2.showRocket(true);
               rocket1.moveRocket(start1, des1);
               rocket2.moveRocket(start2, des2);
+              SoundEffect.Play(SoundEffect.rocket);
             }
 
             pathGroup.addAction(Actions.sequence(

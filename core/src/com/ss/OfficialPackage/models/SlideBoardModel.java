@@ -14,13 +14,13 @@ public class SlideBoardModel {
         return slideHorizontalOrVerticalOfficial(animals, vt1, vt2, false, true);
       }
       case 2: {
-        return slideHorizontalOrVerticalOfficial(animals, vt1, vt2, true, false);
+        return slideStraightInfAllBoardS1(animals);
       }
       case 3: {
         return slideHorizontalOrVerticalOfficial(animals, vt1, vt2, false, false);
       }
       case 4: {
-        return slideFocus(animals, vt1, vt2, true, true);
+        return slideCircleMode1(animals);
       }
       case 5: {
         return slideFocus(animals, vt1, vt2, true, false);
@@ -68,13 +68,14 @@ public class SlideBoardModel {
         return slideStraightInfAllBoard(animals, false, true, false);
       }
       case 20: {
-        return slideCircleMode1(animals);
+        return slideFocus(animals, vt1, vt2, true, true);
       }
 //      case 20: {
 //        return slideCircle(animals, new Vector2(0, 0), 17, 8, true);
 //      }
       case 21: {
-        return slideStraightInfAllBoardS1(animals);
+        return slideHorizontalOrVerticalOfficial(animals, vt1, vt2, true, false);
+//        return slideStraightInfAllBoardS1(animals);
       }
       case 22:{
         //start circle

@@ -23,9 +23,9 @@ import com.ss.effects.SoundEffect;
 public class StartHardView {
   private GLayerGroup group;
   private StartMainController startMainController;
-  private Image btnContinue, btnNewGame, btnShop, btnLeaderBoard, btnSetting, btnGuide;
+  private Image btnContinue, btnNewGame, btnSettingUd, btnShop, btnLeaderBoard, btnSetting, btnGuide;
   private GShapeSprite gshapeBtnContinue, gshapeBtnNewGame, gshapeBtnShop, gshapeBtnLeaderBoard, gshapeBtnSetting, gshapeBtnGuide;
-  private LabelC txtBtnContinue, txtBtnNewGame;
+  private LabelC txtBtnContinue, txtBtnNewGame, txtBtnSetting;
   private boolean isContinue;
   private boolean isClick = false;
 
@@ -67,6 +67,11 @@ public class StartHardView {
     btnLeaderBoard.setPosition(btnShop.getX() + btnShop.getWidth() + btnShop.getWidth()*Config.RATIO_MARGIN_CIRCLE_BUTTON, btnShop.getY());
     btnSetting.setPosition(btnLeaderBoard.getX() + btnLeaderBoard.getWidth() + btnLeaderBoard.getWidth()*Config.RATIO_MARGIN_CIRCLE_BUTTON, btnShop.getY());
     btnGuide.setPosition(btnSetting.getX() + btnSetting.getWidth() + btnSetting.getWidth()*Config.RATIO_MARGIN_CIRCLE_BUTTON, btnShop.getY());
+    btnSetting.setVisible(false);
+    btnShop.setVisible(false);
+    btnLeaderBoard.setVisible(false);
+    btnGuide.setVisible(false);
+
 
     logo.setOrigin(Align.center);
     aniLogo(logo, true);
@@ -87,9 +92,11 @@ public class StartHardView {
   private void initBtnHasText(){
     btnContinue = GUI.createImage(TextureAtlasC.componentAtlas, "btn_yellow");
     btnNewGame = GUI.createImage(TextureAtlasC.componentAtlas, "btn_yellow");
+    btnSettingUd = GUI.createImage(TextureAtlasC.componentAtlas, "btn_yellow");
 
     group.addActor(btnContinue);
     group.addActor(btnNewGame);
+    group.addActor(btnSettingUd);
 
     btnContinue.setVisible(isContinue);
 
@@ -97,6 +104,7 @@ public class StartHardView {
     float x = isContinue ? Config.widthDevice/2 - btnNewGame.getWidth()/2 : btnContinue.getX();
     float y = isContinue ? Config.heightDevice/2 - btnNewGame.getHeight()/2 + btnContinue.getHeight()*1.2f : btnContinue.getY() + btnNewGame.getHeight()/2;
     btnNewGame.setPosition(x, y);
+    btnSettingUd.setPosition(btnNewGame.getX(), btnNewGame.getY() + btnNewGame.getHeight()*1.2f);
 
     initTextOfBtn();
   }
@@ -113,7 +121,7 @@ public class StartHardView {
     gshapeBtnNewGame.createRectangle(true, btnNewGame.getX(), btnNewGame.getY(), btnNewGame.getWidth(), btnNewGame.getHeight());
     gshapeBtnShop.createRectangle(true, btnShop.getX(), btnShop.getY(), btnShop.getWidth(), btnShop.getHeight());
     gshapeBtnLeaderBoard.createRectangle(true, btnLeaderBoard.getX(), btnLeaderBoard.getY(), btnLeaderBoard.getWidth(), btnLeaderBoard.getHeight());
-    gshapeBtnSetting.createRectangle(true, btnSetting.getX(), btnSetting.getY(), btnSetting.getWidth(), btnSetting.getHeight());
+    gshapeBtnSetting.createRectangle(true, btnSettingUd.getX(), btnSettingUd.getY(), btnSettingUd.getWidth(), btnSettingUd.getHeight());
     gshapeBtnGuide.createRectangle(true, btnGuide.getX(), btnGuide.getY(), btnGuide.getWidth(), btnGuide.getHeight());
 
     group.addActor(gshapeBtnContinue);
@@ -131,19 +139,28 @@ public class StartHardView {
     gshapeBtnGuide.setColor(0, 0, 0, 0);
 
     gshapeBtnContinue.setVisible(isContinue);
+
+    gshapeBtnLeaderBoard.setVisible(false);
+    gshapeBtnGuide.setVisible(false);
+    gshapeBtnShop.setVisible(false);
+//    gshapeBtnSetting.setVisible(false);
+
   }
 
   private void initTextOfBtn(){
     txtBtnContinue = new LabelC("Continue", new Label.LabelStyle(BitmapFontC.btnFont, null));
     txtBtnNewGame = new LabelC("New Game", new Label.LabelStyle(BitmapFontC.btnFont, null));
+    txtBtnSetting = new LabelC("Setting", new Label.LabelStyle(BitmapFontC.btnFont, null));
 
     group.addActor(txtBtnContinue);
     group.addActor(txtBtnNewGame);
+    group.addActor(txtBtnSetting);
 
     txtBtnContinue.setVisible(isContinue);
 
     txtBtnContinue.setPosition(btnContinue.getX() + (btnContinue.getWidth()-txtBtnContinue.getWidth())/2, btnContinue.getY() + (btnContinue.getHeight()- txtBtnContinue.getHeight())/2);
     txtBtnNewGame.setPosition(btnNewGame.getX() + (btnNewGame.getWidth()-txtBtnNewGame.getWidth())/2, btnNewGame.getY() + (btnNewGame.getHeight()- txtBtnNewGame.getHeight())/2);
+    txtBtnSetting.setPosition(btnSettingUd.getX() + (btnSettingUd.getWidth() - txtBtnSetting.getWidth())/2, btnSettingUd.getY() + (btnSettingUd.getHeight() - txtBtnSetting.getHeight())/2);
   }
 
   private void initEvent(){
@@ -229,6 +246,7 @@ public class StartHardView {
         if(!isClick){
           isClick = true;
           SoundEffect.Play(SoundEffect.click);
+          startMainController.showSettingPanel(true);
         }
         return super.touchDown(event, x, y, pointer, button);
       }

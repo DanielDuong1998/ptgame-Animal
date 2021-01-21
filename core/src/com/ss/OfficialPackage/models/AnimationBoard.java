@@ -100,14 +100,14 @@ public class AnimationBoard {
       if(!logic1) return;
       final int itemp = i;
       group.addAction(Actions.sequence(
-              Actions.delay(delayTime*(itemp*ope + durationDelta)),
-              Actions.run(()->{
-                for(int j = 0; j < size2; j++) {
-                  final int j1 = isHorizontal == 1 ? j : itemp;
-                  final int j2 = isHorizontal == 1 ? itemp : j;
-                  cellUis.get(j1*BoardConfig.width + j2).animation();
-                }
-              })
+          Actions.delay(delayTime*(itemp*ope + durationDelta)),
+          Actions.run(()->{
+            for(int j = 0; j < size2; j++) {
+              final int j1 = isHorizontal == 1 ? j : itemp;
+              final int j2 = isHorizontal == 1 ? itemp : j;
+              cellUis.get(j1*BoardConfig.width + j2).animation();
+            }
+          })
       ));
     }
   }

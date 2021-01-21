@@ -53,4 +53,7 @@ public class BoardConfig {
   public static int timeBaseScore = 1;
   public static int toolScore = 30;
   public static int level = 1;
+
+
+  public static boolean isShowBtnNextLv = false;
 }
